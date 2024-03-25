@@ -3,6 +3,7 @@ import axios from "axios";
 import { FiPlus, FiTrash } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { FaFire } from "react-icons/fa";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const CustomKanban = () => {
   return (
@@ -13,20 +14,27 @@ export const CustomKanban = () => {
 };
 
 const Board = () => {
+  const { getAccessTokenSilently } = useAuth0();
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
     const fetchCards = async () => {
       try {
+        const token = await getAccessTokenSilently();
+        console.log("Token:", token);
         const response = await axios.get(
-          "http://localhost:3000/api/tasks/getAll"
+          "http://localhost:3000/api/tasks/getAll",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setCards(response.data);
       } catch (error) {
         console.error("Error fetching cards:", error);
       }
     };
-
     fetchCards();
   }, [cards]);
 
@@ -66,6 +74,7 @@ const Board = () => {
 };
 
 const Column = ({ title, headingColor, cards, column, setCards }) => {
+  const { getAccessTokenSilently } = useAuth0();
   const [active, setActive] = useState(false);
 
   const handleDragStart = (e, card) => {
@@ -96,9 +105,18 @@ const Column = ({ title, headingColor, cards, column, setCards }) => {
         setCards(updatedCards);
 
         // Update the column in the database
-        await axios.put(`http://localhost:3000/api/tasks/update/${cardId}`, {
-          column,
-        });
+        const token = await getAccessTokenSilently();
+        await axios.put(
+          `http://localhost:3000/api/tasks/update/${cardId}`,
+          {
+            column,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
       } catch (error) {
         console.error("Error updating card:", error);
       }
@@ -221,6 +239,7 @@ const DropIndicator = ({ beforeId, column }) => {
 };
 
 const BurnBarrel = ({ setCards }) => {
+  const { getAccessTokenSilently } = useAuth0();
   const [active, setActive] = useState(false);
 
   const handleDragOver = (e) => {
@@ -242,8 +261,14 @@ const BurnBarrel = ({ setCards }) => {
     }
 
     try {
+      const token = await getAccessTokenSilently();
       const response = await axios.delete(
-        `http://localhost:3000/api/tasks/delete/${cardId}`
+        `http://localhost:3000/api/tasks/delete/${cardId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       console.log("Delete Response:", response.data);
       setCards((prevCards) => prevCards.filter((card) => card.id !== cardId));
@@ -271,6 +296,7 @@ const BurnBarrel = ({ setCards }) => {
 };
 
 const AddCard = ({ column, setCards }) => {
+  const { getAccessTokenSilently } = useAuth0();
   const [text, setText] = useState("");
   const [adding, setAdding] = useState(false);
 
@@ -280,11 +306,17 @@ const AddCard = ({ column, setCards }) => {
     if (!text.trim().length) return;
 
     try {
+      const token = await getAccessTokenSilently();
       const response = await axios.post(
         "http://localhost:3000/api/tasks/post",
         {
           title: text.trim(),
           column,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       setCards((prevCards) => [...prevCards, response.data]);
