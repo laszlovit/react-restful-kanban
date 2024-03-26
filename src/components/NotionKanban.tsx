@@ -21,7 +21,6 @@ const Board = () => {
     const fetchCards = async () => {
       try {
         const token = await getAccessTokenSilently();
-        console.log("Token:", token);
         const response = await axios.get(
           "http://localhost:3000/api/tasks/getAll",
           {
@@ -39,7 +38,7 @@ const Board = () => {
   }, [cards]);
 
   return (
-    <div className="flex h-full w-full gap-3 overflow-scroll p-12">
+    <div className="flex h-full w-full gap-3 overflow-x-scroll p-12">
       <Column
         title="Backlog"
         column="backlog"
