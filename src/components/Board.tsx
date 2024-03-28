@@ -1,4 +1,3 @@
-// Board.tsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Column from "./Column";
@@ -14,7 +13,7 @@ const Board = () => {
       try {
         const token = await getAccessTokenSilently();
         const response = await axios.get(
-          "http://localhost:3000/api/tasks/getAll",
+          "https://restfulapi-node-express-mongodb.onrender.com/api/tasks/getAll",
           {
             headers: {
               Authorization: `Bearer ${token}`,

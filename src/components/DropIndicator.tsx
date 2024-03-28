@@ -1,4 +1,3 @@
-// DropIndicator.tsx
 import React from "react";
 
 const DropIndicator = ({ beforeId, column }) => {

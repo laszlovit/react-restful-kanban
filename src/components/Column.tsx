@@ -1,4 +1,3 @@
-// Column.tsx
 import React, { useState } from "react";
 import axios from "axios";
 import Card from "./Card";
@@ -40,7 +39,7 @@ const Column = ({ title, headingColor, cards, column, setCards }) => {
         // Update the column in the database
         const token = await getAccessTokenSilently();
         await axios.put(
-          `http://localhost:3000/api/tasks/update/${cardId}`,
+          `https://restfulapi-node-express-mongodb.onrender.com/api/tasks/update/${cardId}`,
           {
             column,
           },

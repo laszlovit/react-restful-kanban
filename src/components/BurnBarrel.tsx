@@ -29,7 +29,7 @@ const BurnBarrel = ({ setCards }) => {
     try {
       const token = await getAccessTokenSilently();
       const response = await axios.delete(
-        `http://localhost:3000/api/tasks/delete/${cardId}`,
+        `https://restfulapi-node-express-mongodb.onrender.com/api/tasks/delete/${cardId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

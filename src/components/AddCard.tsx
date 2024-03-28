@@ -1,4 +1,3 @@
-// AddCard.tsx
 import React, { useState } from "react";
 import axios from "axios";
 import { FiPlus } from "react-icons/fi";
@@ -18,7 +17,7 @@ const AddCard = ({ column, setCards }) => {
     try {
       const token = await getAccessTokenSilently();
       const response = await axios.post(
-        "http://localhost:3000/api/tasks/post",
+        "https://restfulapi-node-express-mongodb.onrender.com/api/tasks/post",
         {
           title: text.trim(),
           column,
