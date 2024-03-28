@@ -1,4 +1,4 @@
-import CustomKanban from "../components/NotionKanban";
+import CustomKanban from "../components/CustomKanban";
 
 const Home = () => {
   return (

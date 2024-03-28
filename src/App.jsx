@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./components/LoginButton";
-import Home from "./pages/Home"; // Import your home page component
-import NavBar from "./components/NavBar";
+import Home from "./pages/Home";
+import NavBar from "./components/NavBar.tsx";
 
 function App() {
   const { isAuthenticated } = useAuth0();
@@ -24,7 +24,7 @@ function App() {
           </div>
         </div>
       )}
-      {isAuthenticated && <Home />} {/* Render home page when authenticated */}
+      {isAuthenticated && <Home />}
     </div>
   );
 }

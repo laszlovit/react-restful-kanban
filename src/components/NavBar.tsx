@@ -1,12 +1,13 @@
+import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import LogoutButton from "./LogoutButton.tsx";
+import LogoutButton from "./LogoutButton";
 
 function Navbar() {
   const { isAuthenticated } = useAuth0();
 
   return (
     <nav className="bg-neutral-900">
-      <div className=" mx-auto flex justify-between items-center px-12 py-6">
+      <div className="mx-auto flex justify-between items-center px-12 py-6">
         <a className="text-lg font-bold text-white" href="#">
           Todo App
         </a>
